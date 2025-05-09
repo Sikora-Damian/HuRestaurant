@@ -1,0 +1,16 @@
+{% extends "main/base.html" %}
+{% block title %}Menu{% endblock %}
+
+{% block content %}
+    <h1>Menu</h1>
+    <h2>{{showDishes.name}}</h2>
+    <ul>
+        {% for dish in showDishes.dish_set.all %}
+            {% if dish.dishOfTheDay == True %}
+                <li class="DishOfTheDay"><b>{{dish.name}} - {{dish.price}} - Danie dnia<br>{{dish.description}}</b></li>
+            {% else %}
+                <li class="NormalDish">{{dish.name}} - {{dish.price}}<br>{{dish.description}}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}
