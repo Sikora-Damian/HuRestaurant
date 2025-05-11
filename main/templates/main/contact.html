@@ -1,4 +1,18 @@
 {% extends 'main/base.html' %}
 
-{% block title %} Create New List {% endblock %}
+{% block title %} Contact {% endblock %}
 
+{% block content %}
+
+<h3>Contact Us!</h3>
+{% if success %}
+<div class="alert alert-success">
+    <strong>Thank you for your submission!</strong> We will get back to you soon.
+</div>
+{% endif %}
+<form method="post" action="/contact/">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" name="save">Contact Us!</button>
+</form>
+{% endblock %}
