@@ -1,9 +1,283 @@
 {% extends 'main/base.html' %}
+{% load static %}
 
 {% block title %}
 Home
 {% endblock %}
 
 {% block content %}
-<h1> Home page </h1>
+    <style>
+        body{
+            background-color: #402c2c;
+        }
+
+        .welcome {
+            position: relative;
+            width: 100%;
+            height: 30vw;
+            overflow: hidden;
+        }
+
+        .welcome img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .welcome h1 {
+            position: absolute;
+            width: 65%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 6rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            text-align: center;
+        }
+
+        .separator{
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .line {
+            flex: 1;
+            border: none;
+            height: 1px;
+            background-color: #F4F3F2;
+        }
+
+        .separator img{
+            height: 5vh;
+            margin: 2%;
+        }
+        .introduction{
+            color: #F4F3F2;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            width: 75%;
+            margin: 0 auto;
+        }
+        .dishOfTheDayContainer{
+            background-color: #e8dcdc;
+            padding-top: 2%;
+            padding-bottom: 2%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu{
+            text-align: center;
+            border: 8px double #333;
+            background-color: #fdfdfd;
+            width: 95%;
+            padding: 30px;
+            position: relative;
+            font-family: 'Georgia', serif;
+            color: #222;
+        }
+        .menu h3{
+            padding-top: 5%;
+        }
+        .menu hr{
+            margin-left: 25%;
+            margin-right: 25%;
+            border-color: #333;
+        }
+        .opinions{
+            color: #F4F3F2;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+            text-align: left;
+            width: 75%;
+            transform: translate(16%);
+        }
+        .opinions h2{
+            text-align: center;
+        }
+        .fa-star{
+            color: #FFC000;
+        }
+        .carousel-control-prev{
+            transform: translate(-100%);
+        }
+        .carousel-control-next{
+            transform: translate(100%);
+        }
+        .contactContainer{
+            background-color: #e8dcdc;
+            width: 100%;
+            padding: 3% 0;
+        }
+        .contact{
+            color: #402c2c;
+            text-align: left;
+            width: 80%;
+            margin: 0 auto;
+        }
+        .contact p{
+            margin-bottom: 0%;
+            padding-bottom: 1%;
+        }
+        .icons{
+            margin-right: 2%;
+            width: 5%;
+            display: inline-block;
+            text-align: center;
+        }
+        .contact span{
+            margin-left: 7%;
+        }
+        .bottomIcons{
+            display: flex;
+            justify-content: center;
+        }
+        .bottomIcons i{
+            padding-top: 3%;
+            padding-left: 3%;
+            padding-right: 3%;
+        }
+        .footer{
+            background-color: #e8dcdc;
+            text-align: center;
+        }
+        .footer p{
+            margin-bottom: 0;
+            padding-bottom: 2%;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .welcome {
+                height: 50vh;
+            }
+
+            .welcome h1 {
+                font-size: 2.5rem;
+                transform: translate(-54%, -50%);
+            }
+
+            .separator img{
+                height: 5vh;
+            }
+            .introduction{
+                font-size: 1.2rem;
+                font-family: Sans-Serif
+            }
+            .introduction img{
+                width: 100%;
+            }
+            .opinions{
+                font-size: 1.2rem;
+                font-family: Sans-Serif
+            }
+            .carousel-item{
+                min-height: 25vh;
+            }
+        }
+    </style>
+
+    <div class="welcome">
+        <img src="{% static 'images/Restaurant.jpg' %}" alt="Restaurant background">
+        <h1>ZAPRASZAMY DO NASZEJ RESTAURACJI, GDZIE SMAK SPOTYKA TRADYCJĘ</h1>
+    </div>
+    <div class="separator">
+        <hr class="line">
+        <img src="{% static 'images/Pizza.png' %}" alt="Pizza icon">
+        <hr class="line">
+    </div>
+    <section class="introduction">
+        <h2> Kim jesteśmy </h2>
+        <p> Jesteśmy pasjonatami kuchni, którzy w 2024 roku stworzyli HuRestaurant w Krakowie.
+            Łączymy tradycyjne przepisy z nowoczesnymi pomysłami, oferując dania pełne jakości, pasji i smaku.
+            U nas każdy znajdzie coś wyjątkowego dla siebie. </p>
+        <img src="{% static 'images/Food.jpg' %}" alt="Food">
+    </section>
+    <div class="separator">
+        <hr class="line">
+        <img src="{% static 'images/Pizza.png' %}" alt="Pizza icon">
+        <hr class="line">
+    </div>
+    <div class="dishOfTheDayContainer">
+        <section class="menu">
+            <h1>DANIA DNIA</h1>
+            <hr>
+            {% for category, dishes in grouped %}
+                <h3>{{ category.name|upper }}</h3>
+            {% for dish in dishes %}
+                <div>
+                    <h5>{{ dish.name }}</h5>
+                </div>
+            {% endfor %}
+            {% empty %}
+                <p>Brak dania dnia na dziś.</p>
+            {% endfor %}
+        </section>
+    </div>
+    <div class="separator">
+        <hr class="line">
+        <img src="{% static 'images/Pizza.png' %}" alt="Pizza icon">
+        <hr class="line">
+    </div>
+    <section class="opinions">
+        <h2>Opinie</h2>
+        <div id="reviewCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+            <div class="carousel-inner">
+                {% for review in reviews %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <div class="px-4">
+                            <p><b>{{ review.nickname }}</b><br>
+                            ({{ review.date }})<br>
+                            <span class="rating-star" title="{{ review.rating }}/5">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= review.rating %}
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    {% else %}
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
+                            </p>
+                            <p>{{ review.content|truncatechars:60 }}</p>
+                        </div>
+                </div>
+                {% empty %}
+                    <p>Brak opinii.</p>
+                {% endfor %}
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#reviewCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Poprzedni</span>
+        </a>
+        <a class="carousel-control-next" href="#reviewCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Następny</span>
+        </a>
+    </section>
+    <div class="separator">
+        <hr class="line">
+        <img src="{% static 'images/Pizza.png' %}" alt="Pizza icon">
+        <hr class="line">
+    </div>
+    <div class="contactContainer">
+        <section class="contact">
+            <h4><b>Kontakt</b></h4>
+            <p><i class="fa fa-map-marker icons" aria-hidden="true"></i>Sienna 19, 31-041 Kraków</p>
+            <p><i class="fa fa-phone-square icons" aria-hidden="true"></i>+48881332019</p>
+            <p><i class="fa fa-envelope icons" aria-hidden="true"></i>restauracja@hurestaurant.pl</p>
+            <p><i class="fa fa-clock-o icons" aria-hidden="true"></i>poniedziałek – czwartek: 9:00 – 22:30<br>
+            <span>piątek – sobota: 8:00 – 23:00</span><br>
+            <span>niedziela: 10:00 – 20:30</span></p>
+            <div class="bottomIcons">
+                <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+                <i class="fa fa-arrow-up" aria-hidden="true"></i>
+            </div>
+        </section>
+    </div>
+    <section class="footer">
+        <p>© 2024 HuRestaurant</p>
+    </section>
 {% endblock %}

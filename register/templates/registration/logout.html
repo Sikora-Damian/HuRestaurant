@@ -1,0 +1,15 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+Login Here
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form method="post" class="form-group" action="{% url 'logout' %}">
+        {% csrf_token %}
+        {{form|crispy}}
+        <button type="submit" class="btn btn-danger">Wyloguj się</button>
+    </form>
+{% endblock %}
